@@ -72,7 +72,7 @@ void openTerminal() {
 
 // windows
 
-void windowsRun() {
+void windowsRun(String cmd) {
   // Irongeek's PHUKD Library
   Keyboard.set_modifier(MODIFIERKEY_RIGHT_GUI); //Windows key
   Keyboard.set_key1(KEY_R); // use r key
@@ -81,7 +81,7 @@ void windowsRun() {
   Keyboard.set_key1(0); //have to do this to keep it from hitting key multiple times.
   Keyboard.send_now(); //Send the key changes
   delay(500);
-  Keyboard.print(SomeCommand);
+  Keyboard.print(cmd);
   Keyboard.set_key1(KEY_ENTER);
   Keyboard.send_now();
   Keyboard.set_key1(0);
