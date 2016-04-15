@@ -50,8 +50,8 @@ void run(String cmd) {
   Keyboard.set_key1(0);
   Keyboard.send_now();
 }
-void openTerminal() {
 
+void openTerminal() {
   Keyboard.set_modifier(MODIFIERKEY_CTRL | MODIFIERKEY_ALT);
   Keyboard.send_now();
   Keyboard.set_key1(KEY_T);
