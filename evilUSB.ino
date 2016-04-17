@@ -21,7 +21,7 @@ void actions() {
 
   type("wget -q http://slacy.me -O test.tmp");
 
-  BLINK_DELAY = 75;
+  BLINK_DELAY = 1000;
 }
 
 // universal
@@ -106,11 +106,7 @@ void loop() {
 
   // PIN_BUTTON press
   if (digitalRead(PIN_BUTTON) == LOW) {
-    /* actions(); */
-    BLINK_DELAY = 25;
+    actions();
     start = 1;
-  }
-  else {
-    BLINK_DELAY = 200;
   }
 }
