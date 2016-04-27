@@ -6,6 +6,7 @@ int PIN_BUTTON = 7;
 // loop effects
 int start = 0;
 int BLINK_DELAY = 250;
+int BUTTON_DELAY = 1500;
 
 void setup() {
   pinMode(PIN_LED, OUTPUT);
@@ -87,20 +88,32 @@ class Actions {
 
 void loop() {
   // flash when done
-
-  digitalWrite(PIN_LED, HIGH);
-  delay(BLINK_DELAY);
-  digitalWrite(PIN_LED, LOW);
-  delay(BLINK_DELAY);
-
   if (start == 1) {
-    return;
+    digitalWrite(PIN_LED, HIGH);
+    delay(BLINK_DELAY);
+    digitalWrite(PIN_LED, LOW);
+    delay(BLINK_DELAY);
+  }
+  else {
+    digitalWrite(PIN_LED, HIGH);
   }
 
-  // PIN_BUTTON press
   if (digitalRead(PIN_BUTTON) == LOW) {
-    Actions::Linux();
-    /* Actions::Windows(); */
+    digitalWrite(PIN_LED, LOW);
+    delay(BUTTON_DELAY);
+    if (digitalRead(PIN_BUTTON) == LOW) {
+      // still held
+      Commands::OpenTerminal();
+      delay(500);
+      Commands::Type("echo 'hold'");
+      // Actions::Linux();
+      start = 1;
+      return;
+    }
+    // just clicked
+    Commands::OpenTerminal();
+    delay(500);
+    Commands::Type("echo 'click'");
     start = 1;
   }
 }
