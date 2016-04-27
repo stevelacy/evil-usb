@@ -14,7 +14,6 @@ void setup() {
   digitalWrite(PIN_LED, HIGH);
 }
 
-
 class Commands {
   public:
     static void Type(String chars) {
@@ -76,7 +75,7 @@ class Actions {
     }
     static void Windows() {
       delay(500);
-      Commands::RunWindows("start chrome");
+      Commands::RunWindows("chrome");
       Commands::Finish();
     }
     static void Osx() {
@@ -103,17 +102,12 @@ void loop() {
     delay(BUTTON_DELAY);
     if (digitalRead(PIN_BUTTON) == LOW) {
       // still held
-      Commands::OpenTerminal();
-      delay(500);
-      Commands::Type("echo 'hold'");
-      // Actions::Linux();
+      Actions::Windows();
       start = 1;
       return;
     }
     // just clicked
-    Commands::OpenTerminal();
-    delay(500);
-    Commands::Type("echo 'click'");
+    Actions::Linux();
     start = 1;
   }
 }
